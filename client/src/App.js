@@ -1,6 +1,9 @@
 import React from 'react';
 import './App.css';
 import axios from 'axios';
+import {BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import Register from './components/Register/Register';
+import Login from './components/Login/Login';
 import logo from './Pizza1.png';
 
 class App extends React.Component{
@@ -27,8 +30,11 @@ class App extends React.Component{
           <img src={logo} className="App-logo" alt="logo" />
           {this.state.data}
         </header>
-      
+        <main>
+        
+        </main>
       </div>
+      
     );
   }
 }
