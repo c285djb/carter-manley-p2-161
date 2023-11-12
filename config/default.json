@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://manleyc1:myPass1234@cluster0.im5oebx.mongodb.net/?retryWrites=true&w=majority",
+    "jwtSecret": "rosebud"
+}
