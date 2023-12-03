@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-//import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const Register = ({ authenticateUser }) => {
     let history = useHistory();
@@ -12,16 +12,16 @@ const Register = ({ authenticateUser }) => {
         password: '',
         passwordConfirm: ''
     });
-    //const [errorData, setErrorData] = useState({ errors: null});
+    const [errorData, setErrorData] = useState({ errors: null});
 
     const {firstName, lastName, username, email, password, passwordConfirm} = userData;
-   // const { errors } = errorData;
+   const { errors } = errorData;
 
     const onChange = e => {
-        const { username, value } = e.target;
+        const { name, value } = e.target;
         setUserData({
             ...userData,
-            [username]: value
+            [name]: value
         }) 
     }
 
@@ -48,23 +48,25 @@ const Register = ({ authenticateUser }) => {
 
                 const body = JSON.stringify(newUser);
                 const res =  await axios.post('http://localhost:5000/api/users', body, config);
-                console.log(res.data);
-                // localStorage.setItem('token',res.data.token);
-                // history.push('/');
+                //console.log(res.data);
+
+                localStorage.setItem('token',res.data.token);
+                history.push('/');
             
             }catch (error){
                 
-                console.error(error.response.data);
-                return;
-                // localStorage.removeItem('token');
+                // console.error(error.response.data);
+                // return;
+                // eslint-disable-next-line
+                localStorage.removeItem('token');
 
-                // setErrorData({
-                //     ...errors,
-                //     errors: error.response.data.errors
-                // })
+                setErrorData({
+                    ...errors,
+                    errors: error.response.data.errors
+                })
             }
 
-            // authenticateUser();
+            authenticateUser();
         }
     }
 
@@ -74,26 +76,26 @@ const Register = ({ authenticateUser }) => {
             <div>
                 <input
                 type="text"
-                placeholder="firstName"
+                placeholder="FirstName"
                 name="firstName"
                 value={firstName}
-                onChange={e =>onChange(e)} />
+                onChange={e => onChange(e)} />
             </div>
             <div>
                 <input
                 type="text"
-                placeholder="lastName"
+                placeholder="LastName"
                 name="lastName"
                 value={lastName}
-                onChange={e =>onChange(e)} />
+                onChange={e => onChange(e)} />
             </div>
             <div>
                 <input
                 type="text"
-                placeholder="username"
+                placeholder="Username"
                 name="username"
                 value={username}
-                onChange={e =>onChange(e)} />
+                onChange={e => onChange(e)} />
             </div>
             <div>
                 <input
@@ -101,7 +103,7 @@ const Register = ({ authenticateUser }) => {
                 placeholder="Email"
                 name="email"
                 value={email}
-                onChange={e =>onChange(e)} />
+                onChange={e => onChange(e)} />
             </div>
             <div>
                 <input
@@ -109,7 +111,7 @@ const Register = ({ authenticateUser }) => {
                 placeholder="Password"
                 name="password"
                 value={password}
-                onChange={e =>onChange(e)} />
+                onChange={e => onChange(e)} />
             </div>
             <div>
                 <input
@@ -117,15 +119,15 @@ const Register = ({ authenticateUser }) => {
                 placeholder="Confirm Password"
                 name="passwordConfirm"
                 value={passwordConfirm}
-                onChange={e =>onChange(e)} />
+                onChange={e => onChange(e)} />
             </div>
             <div>
                 <button onClick={() => register()}>Register</button>
             </div>
-            {/* <div>
+            <div>
                 {errors && errors.map(error =>
                     <div key={error.msg}>{error.msg}</div>)}
-            </div> */}
+            </div>
         </div>
     )
 }
